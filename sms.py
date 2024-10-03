@@ -73,17 +73,16 @@ def toplevel_data(title,button_text,command):
     student_button = ttk.Button(screen, text=button_text, command=command)
     student_button.grid(row=7, columnspan=2, pady=15)
 
-    # Corrected this section to only execute when updating a student
     if title == "Update Student":
         indexing = studentTable.focus()
         if not indexing:
             messagebox.showerror("Error", "Please select a student to update.")
-            screen.destroy()  # Close the window if no student is selected
+            screen.destroy()  
             return
         content = studentTable.item(indexing)
         listdata = content["values"]
 
-        if listdata:  # If listdata is not empty, insert the values into entries
+        if listdata: 
             idEntry.insert(0, listdata[0])
             nameEntry.insert(0, listdata[1])
             emailEntry.insert(0, listdata[2])
@@ -189,7 +188,7 @@ def add_data():
 
 
 def connect():
-    global connectWindow, mycursor, con  # Make connectWindow accessible here
+    global connectWindow, mycursor, con 
     try:
         con = pymysql.connect(host=hostEntry.get(), user=usernameEntry.get(), password=passwordEntry.get())
         mycursor = con.cursor()
@@ -207,12 +206,10 @@ def connect():
                             time VARCHAR(50))""")
         messagebox.showinfo("Success", "Database and Table Creation Successful")
 
-        # Close the connect window
-        connectWindow.destroy()  # Corrected method call with parentheses
+        connectWindow.destroy() 
 
-        # Enable buttons and link the search function
         addstudentButton.config(state=NORMAL)
-        searchstudentButton.config(state=NORMAL)  # Enable search button and assign command
+        searchstudentButton.config(state=NORMAL) 
         updatestudentButton.config(state=NORMAL)
         showstudentButton.config(state=NORMAL)
         exportstudentButton.config(state=NORMAL)
@@ -226,7 +223,7 @@ def connect():
 
 # Functionality Part
 def connect_database():
-    global hostEntry, usernameEntry, passwordEntry, connectWindow  # Make these variables accessible in connect()
+    global hostEntry, usernameEntry, passwordEntry, connectWindow 
     connectWindow = Toplevel()
     connectWindow.grab_set()
     connectWindow.geometry("470x250+730+230")
