@@ -22,14 +22,14 @@ def export_data():
         datalist=content["values"]
         newlist.append(datalist)
 
-    table=pandas.DataFrame(newlist,columns=["Id","Name","Email","Program","Address","Gender","DOB","Added Date","Added Time"])
+    table=pandas.DataFrame(newlist,columns=["Id","Name","Email","Program","Sign In","Sign Out","ItemTaken","Added Date","Added Time"])
     table.to_csv(url,index=False)
     messagebox.showinfo("Success","Data is saved successfully")
 
 
 
 def toplevel_data(title,button_text,command):
-    global idEntry, nameEntry, emailEntry, programEntry, addressEntry, genderEntry, dobEntry, screen
+    global idEntry, nameEntry, emailEntry, programEntry, SignInEntry, SignOutEntry, ItemTakenEntry, screen
     screen = Toplevel()
     screen.title(title)
     screen.grab_set()
@@ -55,20 +55,20 @@ def toplevel_data(title,button_text,command):
     programEntry = Entry(screen, font=("roman", 15, "bold"), width=24)
     programEntry.grid(row=3, column=1, pady=15, padx=10)
 
-    addressLabel = Label(screen, text="Address", font=("times new roman", 20, "bold"))
-    addressLabel.grid(row=4, column=0, padx=30, pady=15, sticky=W)
-    addressEntry = Entry(screen, font=("roman", 15, "bold"), width=24)
-    addressEntry.grid(row=4, column=1, pady=15, padx=10)
+    SignInLabel = Label(screen, text="Sign In", font=("times new roman", 20, "bold"))
+    SignInLabel.grid(row=4, column=0, padx=30, pady=15, sticky=W)
+    SignInEntry = Entry(screen, font=("roman", 15, "bold"), width=24)
+    SignInEntry.grid(row=4, column=1, pady=15, padx=10)
 
-    genderLabel = Label(screen, text="Gender", font=("times new roman", 20, "bold"))
-    genderLabel.grid(row=5, column=0, padx=30, pady=15, sticky=W)
-    genderEntry = Entry(screen, font=("roman", 15, "bold"), width=24)
-    genderEntry.grid(row=5, column=1, pady=15, padx=10)
+    SignOutLabel = Label(screen, text="Sign Out", font=("times new roman", 20, "bold"))
+    SignOutLabel.grid(row=5, column=0, padx=30, pady=15, sticky=W)
+    SignOutEntry = Entry(screen, font=("roman", 15, "bold"), width=24)
+    SignOutEntry.grid(row=5, column=1, pady=15, padx=10)
 
-    dobLabel = Label(screen, text="D.O.B", font=("times new roman", 20, "bold"))
-    dobLabel.grid(row=6, column=0, padx=30, pady=15, sticky=W)
-    dobEntry = Entry(screen, font=("roman", 15, "bold"), width=24)
-    dobEntry.grid(row=6, column=1, pady=15, padx=10)
+    ItemTakenLabel = Label(screen, text="Item Taken", font=("times new roman", 20, "bold"))
+    ItemTakenLabel.grid(row=6, column=0, padx=30, pady=15, sticky=W)
+    ItemTakenEntry = Entry(screen, font=("roman", 15, "bold"), width=24)
+    ItemTakenEntry.grid(row=6, column=1, pady=15, padx=10)
 
     student_button = ttk.Button(screen, text=button_text, command=command)
     student_button.grid(row=7, columnspan=2, pady=15)
@@ -88,18 +88,18 @@ def toplevel_data(title,button_text,command):
             nameEntry.insert(0, listdata[1])
             emailEntry.insert(0, listdata[2])
             programEntry.insert(0, listdata[3])
-            addressEntry.insert(0, listdata[4])
-            genderEntry.insert(0, listdata[5])
-            dobEntry.insert(0, listdata[6])
+            SignInEntry.insert(0, listdata[4])
+            SignOutEntry.insert(0, listdata[5])
+            ItemTakenEntry.insert(0, listdata[6])
 
 
 
 
 
 def update_data():
-    query="update student set name=%s,email=%s,program=%s,address=%s,gender=%s,dob=%s,date=%s,time=%s where id=%s"
-    mycursor.execute(query,(nameEntry.get(),emailEntry.get(),programEntry.get(),addressEntry.get()
-                            ,genderEntry.get(),dobEntry.get(),date,currenttime,idEntry.get()))
+    query="update student set name=%s,email=%s,program=%s,Sign In=%s,Sign Out=%s,ItemTaken=%s,date=%s,time=%s where id=%s"
+    mycursor.execute(query,(nameEntry.get(),emailEntry.get(),programEntry.get(),SignInEntry.get()
+                            ,SignOutEntry.get(),ItemTakenEntry.get(),date,currenttime,idEntry.get()))
     con.commit()
     messagebox.showinfo("Success",f"Id {idEntry.get()} is modified successfully",parent=screen)
     screen.destroy()
@@ -138,9 +138,9 @@ def delete_student():
 
 
 def search_data():
-    query="select * from student where id=%s or name=%s or email=%s or program=%s or address=%s or gender=%s or dob=%s"
-    mycursor.execute(query,(idEntry.get(),nameEntry.get(),emailEntry.get(),programEntry.get(),addressEntry.get()
-                            ,genderEntry.get(),dobEntry.get()))
+    query="select * from student where id=%s or name=%s or email=%s or program=%s or Sign In=%s or Sign Out=%s or ItemTaken=%s"
+    mycursor.execute(query,(idEntry.get(),nameEntry.get(),emailEntry.get(),programEntry.get(),SignInEntry.get()
+                            ,SignOutEntry.get(),ItemTakenEntry.get()))
     studentTable.delete(*studentTable.get_children())
     fetched_data=mycursor.fetchall()
     for data in fetched_data:
@@ -151,15 +151,15 @@ def search_data():
 
 
 def add_data():
-    if idEntry.get() == "" or nameEntry.get() == "" or emailEntry.get() == "" or programEntry.get() == "" or addressEntry.get() == "" or genderEntry.get() == "" or dobEntry.get() == "":
+    if idEntry.get() == "" or nameEntry.get() == "" or emailEntry.get() == "" or programEntry.get() == "" or SignInEntry.get() == "" or SignOutEntry.get() == "" or ItemTakenEntry.get() == "":
         messagebox.showerror("Error", "All Fields are required", parent=screen)
 
     else:
         try:
             query = "insert into student values(%s,%s,%s,%s,%s,%s,%s,%s,%s)"
             mycursor.execute(query, (
-            idEntry.get(), nameEntry.get(), emailEntry.get(), programEntry.get(), addressEntry.get(),
-            genderEntry.get(), dobEntry.get(), date, currenttime))
+            idEntry.get(), nameEntry.get(), emailEntry.get(), programEntry.get(), SignInEntry.get(),
+            SignOutEntry.get(), ItemTakenEntry.get(), date, currenttime))
             con.commit()
             result = messagebox.askyesno("Confirm", "Data added successfully. Do you want to clean the form?",
                                          parent=screen)
@@ -168,9 +168,9 @@ def add_data():
                 nameEntry.delete(0, END)
                 emailEntry.delete(0, END)
                 programEntry.delete(0, END)
-                addressEntry.delete(0, END)
-                genderEntry.delete(0, END)
-                dobEntry.delete(0, END)
+                SignInEntry.delete(0, END)
+                SignOutEntry.delete(0, END)
+                ItemTakenEntry.delete(0, END)
             else:
                 pass
         except:
@@ -200,9 +200,9 @@ def connect():
                             name VARCHAR(30),
                             email VARCHAR(30),
                             program VARCHAR(30),
-                            address VARCHAR(100),
-                            gender VARCHAR(20),
-                            dob VARCHAR(20),
+                            `Sign In` VARCHAR(100),
+                            `Sign Out` VARCHAR(20),
+                            `Item Taken` VARCHAR(20),
                             date VARCHAR(50),
                             time VARCHAR(50))""")
         messagebox.showinfo("Success", "Database and Table Creation Successful")
@@ -333,8 +333,8 @@ rightFrame.place(x=350, y=80, width=820, height=600)
 scrollBarX = Scrollbar(rightFrame, orient=HORIZONTAL)
 scrollBarY = Scrollbar(rightFrame, orient=VERTICAL)
 
-studentTable = ttk.Treeview(rightFrame, columns=("Id", "Name", "Email", "Program", "Address", "Gender",
-                                                 "D.O.B", "Added Date", "Added Time"),
+studentTable = ttk.Treeview(rightFrame, columns=("Id", "Name", "Email", "Program", "Sign In", "Sign Out",
+                                                 "Item Taken", "Added Date", "Added Time"),
                             xscrollcommand=scrollBarX.set, yscrollcommand=scrollBarY.set)
 
 scrollBarX.config(command=studentTable.xview)
@@ -349,9 +349,9 @@ studentTable.heading("Id", text="Id")
 studentTable.heading("Name", text="Name")
 studentTable.heading("Email", text="Email")
 studentTable.heading("Program", text="Program")
-studentTable.heading("Address", text="Address")
-studentTable.heading("Gender", text="Gender")
-studentTable.heading("D.O.B", text="D.O.B")
+studentTable.heading("Sign In", text="Sign In")
+studentTable.heading("Sign Out", text="Sign Out")
+studentTable.heading("Item Taken", text="Item Taken")
 studentTable.heading("Added Date", text="Added Date")
 studentTable.heading("Added Time", text="Added Time")
 
@@ -359,9 +359,9 @@ studentTable.column("Id",width=50,anchor=CENTER)
 studentTable.column("Name",width=300,anchor=CENTER)
 studentTable.column("Email",width=300,anchor=CENTER)
 studentTable.column("Program",width=200,anchor=CENTER)
-studentTable.column("Address",width=300,anchor=CENTER)
-studentTable.column("Gender",width=100,anchor=CENTER)
-studentTable.column("D.O.B",width=100,anchor=CENTER)
+studentTable.column("Sign In",width=300,anchor=CENTER)
+studentTable.column("Sign Out",width=100,anchor=CENTER)
+studentTable.column("Item Taken",width=200,anchor=CENTER)
 studentTable.column("Added Date",width=200,anchor=CENTER)
 studentTable.column("Added Time",width=200,anchor=CENTER)
 

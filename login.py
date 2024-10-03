@@ -21,13 +21,13 @@ window.title("Login System Of Student Management System")
 
 window.resizable(False,False)
 
-backgroundImage=ImageTk.PhotoImage(file="pexels-luna-lovegood-4087571.jpg")
+backgroundImage=ImageTk.PhotoImage(file="background.png")
 
 bgLabel=Label(window,image=backgroundImage)
 bgLabel.place(x=0,y=0)
 
-loginFrame=Frame(window,bg="gray93",bd=0,highlightthickness=0)
-loginFrame.place(x=300,y=100)
+loginFrame=Frame(window,bg="",bd=0,highlightthickness=0)
+loginFrame.place(x=390,y=150)
 
 
 logoImage=PhotoImage(file="student-with-graduation-cap.png")
