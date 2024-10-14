@@ -91,9 +91,6 @@ Save student data as a CSV file by selecting the "Export Data" option.
 - Adding role-based authentication (Admin vs. User access).
 - Implementing a REST API for web-based access to the student database.
 
-Installation Video:
-Provide a YouTube link or local video that demonstrates how to install and use the application.
-
 Demo Link:
 [Demo](https://vimeo.com/1015737269?share=copy#t=0)
 
