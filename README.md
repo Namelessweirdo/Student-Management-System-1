@@ -47,7 +47,7 @@ Displays real-time clock and date to provide a current timestamp for operations.
 - Clone the Repository: Clone the project repository from GitHub using the following command:
 bash
 Copy code
-git clone https://github.com/Namelessweirdo/student-management-system.git
+git clone 
 - Install Dependencies: Install the required dependencies:
 bash
 Copy code
